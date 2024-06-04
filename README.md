@@ -31,13 +31,15 @@ My PyTorch Advantage Actor Critic (A2C) implement to playing Super Mario Bros.
   <img src="demo/gif/8_1.gif" width="200">
   <img src="demo/gif/8_2.gif" width="200">
   <img src="demo/gif/8_3.gif" width="200"><br/>
-  <i>Sample results</i>
+  <i>Results</i>
 </p>
 
 ## Motivation
 
 I've been interested in Reinforcement Learning since I was in university, but I only tested Atari games with the recommended hyperparameters. If you've ever studied RL, you'll realize that finding the right hyperparameters is extremely important for most RL algorithms (because RL is often very sensitive to hyperparameters). Now I want to try using RL to train the agent to play another game instead of Atari like in the papers.
+
 Initially, I only intended to use the stable baseline to train the agent with some lines of code. But I realized that the documentation and code were very hard to read and it was difficult for me to adjust the code.
+
 I have reviewed many other source codes to train agents to play Mario, but most of them only code demos and complete a few very easy states like 1-1, 1-4 and sometimes have some bugs in the code. They also often use simple or right only action_space to make the agent learning easier. So I decided to implement A2C so I can easily adjust the code and understand the algorithm more deeply. I tried tuning the hyperparameters to solve as many stages as possible with this source code.
 
 ## How to use it
@@ -92,12 +94,15 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
 ## Questions
 
 * Is this code guaranteed to complete the stages if you try training?
+  
 This super parameter does not guarantee you will complete the stage, but I tried and most stages will complete on the first train. A few difficult stages will take 2 to 3 times to complete.
 
 * How long do you train agents?
+  
 Within a few hours to more than 1 day. Time depends on hardware, I use many different hardware so time will not be accurate.
 
-* How can you improve this code? 
+* How can you improve this code?
+  
 You can separate the test agent part into a separate thread or process. I'm not good at multi-threaded programming so I don't do this.
 
 ## Requirements
