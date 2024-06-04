@@ -95,7 +95,7 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
 
 * Is this code guaranteed to complete the stages if you try training?
   
-This super parameter does not guarantee you will complete the stage, but I tried and most stages will complete on the first train. A few difficult stages will take 2 to 3 times to complete.
+This hyperparameter does not guarantee you will complete the stage, but I tried and most stages will complete on the first train. A few difficult stages will take 2 to 3 times to complete.
 
 * How long do you train agents?
   
