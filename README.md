@@ -12,7 +12,7 @@ My PyTorch Advantage Actor Critic (A2C) implement to playing Super Mario Bros.
   <img src="demo/gif/2-2.gif" width="200">
   <img src="demo/gif/2-3.gif" width="200">
   <img src="demo/gif/2-4.gif" width="200"><br/>
-  <img src="demo/gif/3-1.gif" width="200"><br/>
+  <img src="demo/gif/3-1.gif" width="200">
   <img src="demo/gif/3-2.gif" width="200">
   <img src="demo/gif/3-3.gif" width="200">
   <img src="demo/gif/3-4.gif" width="200"><br/>
