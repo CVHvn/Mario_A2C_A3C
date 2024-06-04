@@ -5,32 +5,32 @@ Playing Super Mario Bros with Advantage Actor Critic (A2C)
 
 My PyTorch Advantage Actor Critic (A2C) implement to playing Super Mario Bros.
 <p align="center">
-  <img src="demo/gif/1_1.gif" width="200">
-  <img src="demo/gif/1_2.gif" width="200">
-  <img src="demo/gif/1_4.gif" width="200"><br/>
-  <img src="demo/gif/2_1.gif" width="200">
-  <img src="demo/gif/2_2.gif" width="200">
-  <img src="demo/gif/2_3.gif" width="200">
-  <img src="demo/gif/2_4.gif" width="200"><br/>
-  <img src="demo/gif/3_1.gif" width="200"><br/>
-  <img src="demo/gif/3_2.gif" width="200">
-  <img src="demo/gif/3_3.gif" width="200">
-  <img src="demo/gif/3_4.gif" width="200"><br/>
-  <img src="demo/gif/4_1.gif" width="200">
-  <img src="demo/gif/4_2.gif" width="200"><br/>
-  <img src="demo/gif/5_1.gif" width="200">
-  <img src="demo/gif/5_2.gif" width="200">
-  <img src="demo/gif/5_4.gif" width="200"><br/>
-  <img src="demo/gif/6_1.gif" width="200">
-  <img src="demo/gif/6_2.gif" width="200">
-  <img src="demo/gif/6_4.gif" width="200"><br/>
-  <img src="demo/gif/7_1.gif" width="200">
-  <img src="demo/gif/7_2.gif" width="200">
-  <img src="demo/gif/7_3.gif" width="200">
-  <img src="demo/gif/7_4.gif" width="200"><br/>
-  <img src="demo/gif/8_1.gif" width="200">
-  <img src="demo/gif/8_2.gif" width="200">
-  <img src="demo/gif/8_3.gif" width="200"><br/>
+  <img src="demo/gif/1-1.gif" width="200">
+  <img src="demo/gif/1-2.gif" width="200">
+  <img src="demo/gif/1-4.gif" width="200"><br/>
+  <img src="demo/gif/2-1.gif" width="200">
+  <img src="demo/gif/2-2.gif" width="200">
+  <img src="demo/gif/2-3.gif" width="200">
+  <img src="demo/gif/2-4.gif" width="200"><br/>
+  <img src="demo/gif/3-1.gif" width="200"><br/>
+  <img src="demo/gif/3-2.gif" width="200">
+  <img src="demo/gif/3-3.gif" width="200">
+  <img src="demo/gif/3-4.gif" width="200"><br/>
+  <img src="demo/gif/4-1.gif" width="200">
+  <img src="demo/gif/4-2.gif" width="200"><br/>
+  <img src="demo/gif/5-1.gif" width="200">
+  <img src="demo/gif/5-2.gif" width="200">
+  <img src="demo/gif/5-4.gif" width="200"><br/>
+  <img src="demo/gif/6-1.gif" width="200">
+  <img src="demo/gif/6-2.gif" width="200">
+  <img src="demo/gif/6-4.gif" width="200"><br/>
+  <img src="demo/gif/7-1.gif" width="200">
+  <img src="demo/gif/7-2.gif" width="200">
+  <img src="demo/gif/7-3.gif" width="200">
+  <img src="demo/gif/7-4.gif" width="200"><br/>
+  <img src="demo/gif/8-1.gif" width="200">
+  <img src="demo/gif/8-2.gif" width="200">
+  <img src="demo/gif/8-3.gif" width="200"><br/>
   <i>Results</i>
 </p>
 
