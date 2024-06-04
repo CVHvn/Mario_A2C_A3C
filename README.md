@@ -5,32 +5,32 @@ Playing Super Mario Bros with Advantage Actor Critic (A2C)
 
 My PyTorch Advantage Actor Critic (A2C) implement to playing Super Mario Bros.
 <p align="center">
-  <img src="demo/gif/video_1_1.gif" width="200">
-  <img src="demo/gif/video_1_2.gif" width="200">
-  <img src="demo/gif/video_1_4.gif" width="200"><br/>
-  <img src="demo/gif/video_2_1.gif" width="200">
-  <img src="demo/gif/video_2_2.gif" width="200">
-  <img src="demo/gif/video_2_3.gif" width="200">
-  <img src="demo/gif/video_2_4.gif" width="200"><br/>
-  <img src="demo/gif/video_3_1.gif" width="200"><br/>
-  <img src="demo/gif/video_3_2.gif" width="200">
-  <img src="demo/gif/video_3_3.gif" width="200">
-  <img src="demo/gif/video_3_4.gif" width="200"><br/>
-  <img src="demo/gif/video_4_1.gif" width="200">
-  <img src="demo/gif/video_4_2.gif" width="200"><br/>
-  <img src="demo/gif/video_5_1.gif" width="200">
-  <img src="demo/gif/video_5_2.gif" width="200">
-  <img src="demo/gif/video_5_4.gif" width="200"><br/>
-  <img src="demo/gif/video_6_1.gif" width="200">
-  <img src="demo/gif/video_6_2.gif" width="200">
-  <img src="demo/gif/video_6_4.gif" width="200"><br/>
-  <img src="demo/gif/video_7_1.gif" width="200">
-  <img src="demo/gif/video_7_2.gif" width="200">
-  <img src="demo/gif/video_7_3.gif" width="200">
-  <img src="demo/gif/video_7_4.gif" width="200"><br/>
-  <img src="demo/gif/video_8_1.gif" width="200">
-  <img src="demo/gif/video_8_2.gif" width="200">
-  <img src="demo/gif/video_8_3.gif" width="200"><br/>
+  <img src="demo/gif/1_1.gif" width="200">
+  <img src="demo/gif/1_2.gif" width="200">
+  <img src="demo/gif/1_4.gif" width="200"><br/>
+  <img src="demo/gif/2_1.gif" width="200">
+  <img src="demo/gif/2_2.gif" width="200">
+  <img src="demo/gif/2_3.gif" width="200">
+  <img src="demo/gif/2_4.gif" width="200"><br/>
+  <img src="demo/gif/3_1.gif" width="200"><br/>
+  <img src="demo/gif/3_2.gif" width="200">
+  <img src="demo/gif/3_3.gif" width="200">
+  <img src="demo/gif/3_4.gif" width="200"><br/>
+  <img src="demo/gif/4_1.gif" width="200">
+  <img src="demo/gif/4_2.gif" width="200"><br/>
+  <img src="demo/gif/5_1.gif" width="200">
+  <img src="demo/gif/5_2.gif" width="200">
+  <img src="demo/gif/5_4.gif" width="200"><br/>
+  <img src="demo/gif/6_1.gif" width="200">
+  <img src="demo/gif/6_2.gif" width="200">
+  <img src="demo/gif/6_4.gif" width="200"><br/>
+  <img src="demo/gif/7_1.gif" width="200">
+  <img src="demo/gif/7_2.gif" width="200">
+  <img src="demo/gif/7_3.gif" width="200">
+  <img src="demo/gif/7_4.gif" width="200"><br/>
+  <img src="demo/gif/8_1.gif" width="200">
+  <img src="demo/gif/8_2.gif" width="200">
+  <img src="demo/gif/8_3.gif" width="200"><br/>
   <i>Sample results</i>
 </p>
 
@@ -60,34 +60,34 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
 * For some stages that require a long sequence of actions (like jumping over a deep hole), setting a gamma of 0.99 helps the model complete the stage while 0.9 cannot.
 * Setting learn_step to 5 usually helps the model learn better (especially helps complete stage 8-1) but training time and stability will decrease compared to learn_step of 20.
 
-| World | Stage | num_envs | learn_step | gamma | learning_rate | training_step | training_time |
-|-------|-------|----------|------------|-------|---------------|---------------|---------------| 
-| 1     | 1     | 16       | 20         | 0.9   | 1.00E-04      | 374000        | 5:34:38  
-| 1     | 2     | 16       | 20         | 0.9   | 1.00E-04      | 1388000       | 18:44:51      |
-| 1     | 4     | 16       | 20         | 0.9   | 1.00E-04      | 56000 0:51:34
-| 2     | 1     | 16       | 20         | 0.99  | 1.00E-04      | 2520000 15:11:00
-| 2     | 2     | 16       | 20         | 0.9   | 1.00E-04      | 2582000 1 day, 14:54:56 
-| 2     | 3     | 16       | 20         | 0.9   | 1.00E-04      | 401000 5:28:46
-| 2     | 4     | 16       | 20         | 0.9   | 1.00E-04      | 247000 3:40:49
-| 3     | 1     | 16       | 20         | 0.9   | 1.00E-04      | 308000 4:43:37
-| 3     | 2     | 16       | 20         | 0.9   | 1.00E-04      | 156000 2:29:00
-| 3     | 3     | 16       | 20         | 0.99  | 1.00E-04      | 1311000  15:16:28
-| 3     | 4     | 16       | 20         | 0.99  | 1.00E-04      | 443000  6:46:07
-| 4     | 1     | 16       | 20         | 0.9   | 1.00E-04      | 295000  4:08:22
-| 4     | 2     | 16       | 20         | 0.99  | 1.00E-04      | 1120000 11:35:43
-| 5     | 1     | 16       | 20         | 0.9   | 1.00E-04      | 486000 7:10:43
-| 5     | 2     | 16       | 20         | 0.9   | 1.00E-04      | 1089000 11:50:50
-| 5     | 4     | 16       | 20         | 0.99  | 1.00E-04      | 1636000 22:02:11
-| 6     | 1     | 16       | 20         | 0.9   | 1.00E-04      | 88000  1:01:50
-| 6     | 2     | 16       | 20         | 0.99  | 1.00E-04      | 1215000  16:41:19
-| 6     | 4     | 16       | 20         | 0.99  | 1.00E-04      | 940000  7:57:47
-| 7     | 1     | 8        | 20         | 0.9   | 1.00E-04      | 528000  4:06:45
-| 7     | 2     | 8        | 20         | 0.9   | 1.00E-04      | 3427000 1 day, 5:22:18
-| 7     | 3     | 8        | 20         | 0.9   | 1.00E-04      | 1545000 12:17:16
-| 7     | 4     | 16       | 20         | 0.99  | 1.00E-04      | 1462000 15:27:19
-| 8     | 1     | 16       | 5          | 0.9   | 1.00E-04      | 2158000 1 day, 2:35:41
-| 8     | 2     | 16       | 20         | 0.9   | 1.00E-04      | 1107000 16:24:30 
-| 8     | 3     | 16       | 20         | 0.9   | 1.00E-04      | 521000 8:12:27
+| World | Stage | num_envs | learn_step | gamma | learning_rate | training_step | training_time   |
+|-------|-------|----------|------------|-------|---------------|---------------|-----------------| 
+| 1     | 1     | 16       | 20         | 0.9   | 1e-4          | 374000        | 5:34:38         |
+| 1     | 2     | 16       | 20         | 0.9   | 1e-4          | 1388000       | 18:44:51        |
+| 1     | 4     | 16       | 20         | 0.9   | 1e-4          | 56000         | 0:51:34         |
+| 2     | 1     | 16       | 20         | 0.99  | 1e-4          | 2520000       | 15:11:00        |
+| 2     | 2     | 16       | 20         | 0.9   | 1e-4          | 2582000       | 1 day, 14:54:56 | 
+| 2     | 3     | 16       | 20         | 0.9   | 1e-4          | 401000        | 5:28:46         |
+| 2     | 4     | 16       | 20         | 0.9   | 1e-4          | 247000        | 3:40:49         |
+| 3     | 1     | 16       | 20         | 0.9   | 1e-4          | 308000        | 4:43:37         |
+| 3     | 2     | 16       | 20         | 0.9   | 1e-4          | 156000        | 2:29:00         |
+| 3     | 3     | 16       | 20         | 0.99  | 1e-4          | 1311000       | 15:16:28        |
+| 3     | 4     | 16       | 20         | 0.99  | 1e-4          | 443000        | 6:46:07         |
+| 4     | 1     | 16       | 20         | 0.9   | 1e-4          | 295000        | 4:08:22         |
+| 4     | 2     | 16       | 20         | 0.99  | 1e-4          | 1120000       | 11:35:43        |
+| 5     | 1     | 16       | 20         | 0.9   | 1e-4          | 486000        | 7:10:43         |
+| 5     | 2     | 16       | 20         | 0.9   | 1e-4          | 1089000       | 11:50:50        |
+| 5     | 4     | 16       | 20         | 0.99  | 1e-4          | 1636000       | 22:02:11        |
+| 6     | 1     | 16       | 20         | 0.9   | 1e-4          | 88000         | 1:01:50         |
+| 6     | 2     | 16       | 20         | 0.99  | 1e-4          | 1215000       | 16:41:19        |
+| 6     | 4     | 16       | 20         | 0.99  | 1e-4          | 940000        | 7:57:47         |
+| 7     | 1     | 8        | 20         | 0.9   | 1e-4          | 528000        | 4:06:45         |
+| 7     | 2     | 8        | 20         | 0.9   | 1e-4          | 3427000       | 1 day, 5:22:18  |
+| 7     | 3     | 8        | 20         | 0.9   | 1e-4          | 1545000       | 12:17:16        |
+| 7     | 4     | 16       | 20         | 0.99  | 1e-4          | 1462000       | 15:27:19        |
+| 8     | 1     | 16       | 5          | 0.9   | 1e-4          | 2158000       | 1 day, 2:35:41  |
+| 8     | 2     | 16       | 20         | 0.9   | 1e-4          | 1107000       | 16:24:30        |
+| 8     | 3     | 16       | 20         | 0.9   | 1e-4          | 521000        | 8:12:27         |
 
 ## Questions
 
