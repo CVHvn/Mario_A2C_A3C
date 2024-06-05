@@ -4,7 +4,7 @@ Playing Super Mario Bros with Advantage Actor Critic (A2C)
 ## Introduction
 
 My PyTorch Advantage Actor Critic (A2C) implement to playing Super Mario Bros.
-<p align="center">
+<p align="left">
   <img src="demo/gif/1-1.gif" width="200">
   <img src="demo/gif/1-2.gif" width="200">
   <img src="demo/gif/1-4.gif" width="200"><br/>
