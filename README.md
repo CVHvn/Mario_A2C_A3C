@@ -48,6 +48,10 @@ You can use my notebook for training and testing agent very easy:
 * **Train your model** by running all cell before session test
 * **Test your trained model** by running all cell except agent.train(), just pass your model path to agent.load_model(model_path)
 
+Or you can use **train.py** and **test.py** if you don't want to use notebook:
+* **Train your model** by running **train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 8
+* **Test your trained model** by running **test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth  --num_envs 2
+
 ## Trained models
 
 You can find trained model in folder [trained_model](trained_model)
