@@ -4,56 +4,59 @@ Playing Super Mario Bros with Advantage Actor Critic (A2C)
 ## Introduction
 
 My PyTorch Advantage Actor Critic (A2C) implement to playing Super Mario Bros.
-<table style="border-collapse: collapse; border-spacing: 0; padding: 0;">
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/1-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/1-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/1-4.gif" width="200"></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/2-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/2-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/2-3.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/2-4.gif" width="200"></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/3-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/3-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/3-3.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/3-4.gif" width="200"></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/4-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/4-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"></td>
-    <td style="padding: 0; border: 1px solid #eee;"></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/5-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/5-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/5-4.gif" width="200"></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/6-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/6-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/6-4.gif" width="200"></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/7-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/7-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/7-3.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/7-4.gif" width="200"></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/8-1.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/8-2.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"><img src="demo/gif/8-3.gif" width="200"></td>
-    <td style="padding: 0; border: 1px solid #eee;"></td>
-  </tr>
-</table>
+<style>
+  .gif-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    grid-auto-rows: 200px;
+    gap: 0;
+    justify-content: left;
+  }
+  .gif-grid > div {
+    background-color: #fff;  /* or #000 for dark mode */
+    border: 1px solid #eee;
+  }
+  .gif-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<div class="gif-grid">
+  <div><img src="demo/gif/1-1.gif"></div>
+  <div><img src="demo/gif/1-2.gif"></div>
+  <div></div>
+  <div><img src="demo/gif/1-4.gif"></div>
+  <div><img src="demo/gif/2-1.gif"></div>
+  <div><img src="demo/gif/2-2.gif"></div>
+  <div><img src="demo/gif/2-3.gif"></div>
+  <div><img src="demo/gif/2-4.gif"></div>
+  <div><img src="demo/gif/3-1.gif"></div>
+  <div><img src="demo/gif/3-2.gif"></div>
+  <div><img src="demo/gif/3-3.gif"></div>
+  <div><img src="demo/gif/3-4.gif"></div>
+  <div><img src="demo/gif/4-1.gif"></div>
+  <div><img src="demo/gif/4-2.gif"></div>
+  <div></div>
+  <div></div>
+  <div><img src="demo/gif/5-1.gif"></div>
+  <div><img src="demo/gif/5-2.gif"></div>
+  <div></div>
+  <div><img src="demo/gif/5-4.gif"></div>
+  <div><img src="demo/gif/6-1.gif"></div>
+  <div><img src="demo/gif/6-2.gif"></div>
+  <div></div>
+  <div><img src="demo/gif/6-4.gif"></div>
+  <div><img src="demo/gif/7-1.gif"></div>
+  <div><img src="demo/gif/7-2.gif"></div>
+  <div><img src="demo/gif/7-3.gif"></div>
+  <div><img src="demo/gif/7-4.gif"></div>
+  <div><img src="demo/gif/8-1.gif"></div>
+  <div><img src="demo/gif/8-2.gif"></div>
+  <div><img src="demo/gif/8-3.gif"></div>
+  <div></div>
+</div>
 
 <p align="center"><i>Results</i></p>
 
