@@ -16,9 +16,9 @@ def get_args():
 
     parser.add_argument('--learning_rate', type=float, default=1e-4)
     parser.add_argument('--gamma', type=float, default=0.9, help='Discount factor for rewards')
-    parser.add_argument('--V_coef', type=float, default=0.01, help='Value loss coefficient')
+    parser.add_argument('--V_coef', type=float, default=0.5, help='Value loss coefficient')
     parser.add_argument('--entropy_coef', type=float, default=0.01, help='Entropy loss coefficient')
-    parser.add_argument('--max_grad_norm', type=float, default=0.01, help='Max gradient norm')
+    parser.add_argument('--max_grad_norm', type=float, default=0.5, help='Max gradient norm')
 
     parser.add_argument('--total_step', type=int, default=int(5e6), help='Total step for training')
     parser.add_argument('--save_model_step', type=int, default=int(1e5), help='Number of steps between saving model')
