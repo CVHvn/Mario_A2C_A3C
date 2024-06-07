@@ -13,8 +13,8 @@ def get_args():
     parser.add_argument("--stage", type=int, default=1)
     parser.add_argument("--pretrained_model", type=str, default="best_model.pth", help = 'Pretrained model path')
 
-    parser.add_argument('--num_envs', type=int, default=16, help='Number of steps between training model')
-    parser.add_argument('--learn_step', type=int, default=20, help='Number of environment')
+    parser.add_argument('--num_envs', type=int, default=16, help='Number of environment')
+    parser.add_argument('--learn_step', type=int, default=20, help='Number of steps between training model')
 
     parser.add_argument('--learning_rate', type=float, default=1e-4)
     parser.add_argument('--gamma', type=float, default=0.9, help='Discount factor for rewards')
