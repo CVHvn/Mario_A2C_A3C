@@ -82,7 +82,7 @@ class Agent():
         self.loss_index = 0
         self.len_loss = 0
 
-    def save_figure(self):
+    def save_figure(self, is_training=False):
         # test current model and save model/figure if model yield best total rewards.
         # create env for testing, reset test env
         if self.env is None:
@@ -123,14 +123,16 @@ class Agent():
                 break
 
         #logging, if model yield better result, save figure (test_episode.mp4) and model (best_model.pth)
-        f_out = open(f"logging_test.txt", "a")
-        f_out.write(f'episode_reward: {total_reward} episode_step: {total_step} current_step: {self.current_step} loss_p: {(self.P_loss.sum()/self.len_loss):.4f} loss_v: {(self.V_loss.sum()/self.len_loss):.4f} loss_e: {(self.E_loss.sum()/self.len_loss):.4f} loss: {(self.total_loss.sum()/self.len_loss):.4f} episode_time: {datetime.now() - episode_time}\n')
-        f_out.close()
+        if is_training:
+            f_out = open(f"logging_test.txt", "a")
+            f_out.write(f'episode_reward: {total_reward} episode_step: {total_step} current_step: {self.current_step} loss_p: {(self.P_loss.sum()/self.len_loss):.4f} loss_v: {(self.V_loss.sum()/self.len_loss):.4f} loss_e: {(self.E_loss.sum()/self.len_loss):.4f} loss: {(self.total_loss.sum()/self.len_loss):.4f} episode_time: {datetime.now() - episode_time}\n')
+            f_out.close()
 
         if total_reward > self.max_test_score or info['flag_get']:
             imageio.mimsave('test_episode.mp4', images)
             self.max_test_score = total_reward
-            torch.save(self.model.state_dict(), f"best_model.pth")
+            if is_training:
+                torch.save(self.model.state_dict(), f"best_model.pth")
 
         # if model can complete this game, stop training by set self.is_completed to True
         if info['flag_get']:
@@ -280,7 +282,7 @@ class Agent():
 
             # eval agent every save_figure_step
             if self.current_step % self.save_figure_step == 0 and self.save_figure_step != -1:
-                self.save_figure()
+                self.save_figure(is_training=True)
                 if self.is_completed:
                     f_out = open(f"logging.txt", "a")
                     f_out.write(f' mean_rewards: {np.array(last_episode_rewards[-min(len(last_episode_rewards), 100):]).mean()} max_rewards: {max_episode_reward} max_steps: {max_episode_step} current_step: {self.current_step} total_time: {datetime.now() - total_time}\n')
