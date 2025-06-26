@@ -54,17 +54,17 @@ I have reviewed many other source codes to train agents to play Mario, but most 
 
 ### A2C
 
-You can use my notebook for training and testing agent very easy:
+You can use my [A2C notebook](a2c_lstm_mario.ipynb) for training and testing agent very easy:
 * **Train your model** by running all cell before session test
 * **Test your trained model** by running all cell except agent.train(), just pass your model path to agent.load_model(model_path)
 
-Or you can use **A2C/train.py** and **A2C/test.py** if you don't want to use notebook:
+Or you can use [**A2C/train.py**](A2C/train.py) and [**A2C/test.py**](A2C/test.py) if you don't want to use notebook:
 * **Train your model** by running **A2C/train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 8
 * **Test your trained model** by running **A2C/test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth  --num_envs 2
 
 ### A3C
 
-Use **A3C/train.py** and **A3C/test.py**:
+Use [**A3C/train.py**](A3C/train.py) and [**A3C/test.py**](A3C/test.py):
 * **Train your model** by running **A3C/train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 8
 * **Test your trained model** by running **A3C/test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth  --num_envs 2
 
@@ -72,7 +72,7 @@ A3C use multi process make it hard to work with notebook --> I don't use noteboo
 
 ## Trained models
 
-You can find A2C trained model in folder [trained_model](A2C\trained_model)
+You can find A2C trained model in folder [trained_model](A2C/trained_model)
 
 ## Hyperparameters
 
