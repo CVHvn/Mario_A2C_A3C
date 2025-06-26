@@ -33,7 +33,7 @@ def get_args():
     parser.add_argument("--state_dim", type=tuple, default=(1, 84, 84))
     parser.add_argument("--additional_bonus_state_8_4_option", type=str, default='no', help='if you want bonus reward for stage 8-4, set it to "right_pipe"')
 
-    parser.add_argument("--save_dir", type=str, default="")
+    parser.add_argument("--pretrained_model", type=str, default="best_model.pth")
     args = parser.parse_args()
     return args
 
@@ -43,7 +43,7 @@ def test(config):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model.to(device)
 
-    model.load_state_dict(torch.load(config.save_dir))
+    model.load_state_dict(torch.load(config.pretrained_model))
     model.eval()
 
     images = []
