@@ -1,43 +1,45 @@
-# Mario_A2C
-Playing Super Mario Bros with Advantage Actor Critic (A2C)
+# Mario_A2C_A3C
+Playing Super Mario Bros with Advantage Actor Critic (A2C) and Asynchronous Advantage Actor Critic (A3C)
 
 ## Introduction
 
-My PyTorch Advantage Actor Critic (A2C) implement to playing Super Mario Bros.
+My PyTorch Advantage Actor Critic (A2C) and Asynchronous Advantage Actor Critic (A3C) implement to playing Super Mario Bros.
+
+This is A2C result:
 <p align="center">
-  <img src="demo/gif/1-1.gif" width="200">
-  <img src="demo/gif/1-2.gif" width="200">
-  <img src="https://via.placeholder.com/200x200/FFFFFF/FFFFFF.png" width="200">
-  <img src="demo/gif/1-4.gif" width="200"><br/>
-  <img src="demo/gif/2-1.gif" width="200">
-  <img src="demo/gif/2-2.gif" width="200">
-  <img src="demo/gif/2-3.gif" width="200">
-  <img src="demo/gif/2-4.gif" width="200"><br/>
-  <img src="demo/gif/3-1.gif" width="200">
-  <img src="demo/gif/3-2.gif" width="200">
-  <img src="demo/gif/3-3.gif" width="200">
-  <img src="demo/gif/3-4.gif" width="200"><br/>
-  <img src="demo/gif/4-1.gif" width="200">
-  <img src="demo/gif/4-2.gif" width="200">
-  <img src="https://via.placeholder.com/200x200/FFFFFF/FFFFFF.png" width="200">
-  <img src="https://via.placeholder.com/200x200/FFFFFF/FFFFFF.png" width="200"><br/>
-  <img src="demo/gif/5-1.gif" width="200">
-  <img src="demo/gif/5-2.gif" width="200">
-  <img src="https://via.placeholder.com/200x200/FFFFFF/FFFFFF.png" width="200">
-  <img src="demo/gif/5-4.gif" width="200"><br/>
-  <img src="demo/gif/6-1.gif" width="200">
-  <img src="demo/gif/6-2.gif" width="200">
-  <img src="https://via.placeholder.com/200x200/FFFFFF/FFFFFF.png" width="200">
-  <img src="demo/gif/6-4.gif" width="200"><br/>
-  <img src="demo/gif/7-1.gif" width="200">
-  <img src="demo/gif/7-2.gif" width="200">
-  <img src="demo/gif/7-3.gif" width="200">
-  <img src="demo/gif/7-4.gif" width="200"><br/>
-  <img src="demo/gif/8-1.gif" width="200">
-  <img src="demo/gif/8-2.gif" width="200">
-  <img src="demo/gif/8-3.gif" width="200">
-  <img src="https://via.placeholder.com/200x200/FFFFFF/FFFFFF.png" width="200"><br/>
-  <i>Results</i>
+  <img src="A2C/demo/gif/1-1.gif" width="200">
+  <img src="A2C/demo/gif/1-2.gif" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200">
+  <img src="A2C/demo/gif/1-4.gif" width="200"><br/>
+  <img src="A2C/demo/gif/2-1.gif" width="200">
+  <img src="A2C/demo/gif/2-2.gif" width="200">
+  <img src="A2C/demo/gif/2-3.gif" width="200">
+  <img src="A2C/demo/gif/2-4.gif" width="200"><br/>
+  <img src="A2C/demo/gif/3-1.gif" width="200">
+  <img src="A2C/demo/gif/3-2.gif" width="200">
+  <img src="A2C/demo/gif/3-3.gif" width="200">
+  <img src="A2C/demo/gif/3-4.gif" width="200"><br/>
+  <img src="A2C/demo/gif/4-1.gif" width="200">
+  <img src="A2C/demo/gif/4-2.gif" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200"><br/>
+  <img src="A2C/demo/gif/5-1.gif" width="200">
+  <img src="A2C/demo/gif/5-2.gif" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200">
+  <img src="A2C/demo/gif/5-4.gif" width="200"><br/>
+  <img src="A2C/demo/gif/6-1.gif" width="200">
+  <img src="A2C/demo/gif/6-2.gif" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200">
+  <img src="A2C/demo/gif/6-4.gif" width="200"><br/>
+  <img src="A2C/demo/gif/7-1.gif" width="200">
+  <img src="A2C/demo/gif/7-2.gif" width="200">
+  <img src="A2C/demo/gif/7-3.gif" width="200">
+  <img src="A2C/demo/gif/7-4.gif" width="200"><br/>
+  <img src="A2C/demo/gif/8-1.gif" width="200">
+  <img src="A2C/demo/gif/8-2.gif" width="200">
+  <img src="A2C/demo/gif/8-3.gif" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200"><br/>
+  <i>A2C Results</i>
 </p>
 
 ## Motivation
@@ -50,19 +52,31 @@ I have reviewed many other source codes to train agents to play Mario, but most 
 
 ## How to use it
 
+### A2C
+
 You can use my notebook for training and testing agent very easy:
 * **Train your model** by running all cell before session test
 * **Test your trained model** by running all cell except agent.train(), just pass your model path to agent.load_model(model_path)
 
-Or you can use **train.py** and **test.py** if you don't want to use notebook:
-* **Train your model** by running **train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 8
-* **Test your trained model** by running **test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth  --num_envs 2
+Or you can use **A2C/train.py** and **A2C/test.py** if you don't want to use notebook:
+* **Train your model** by running **A2C/train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 8
+* **Test your trained model** by running **A2C/test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth  --num_envs 2
+
+### A3C
+
+Use **A3C/train.py** and **A3C/test.py**:
+* **Train your model** by running **A3C/train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 8
+* **Test your trained model** by running **A3C/test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth  --num_envs 2
+
+A3C use multi process make it hard to work with notebook --> I don't use notebook for A3C version!
 
 ## Trained models
 
-You can find trained model in folder [trained_model](trained_model)
+You can find A2C trained model in folder [trained_model](A2C\trained_model)
 
 ## Hyperparameters
+
+### A2C
 
 I use hyperparameters as this table to train agent. How I find hyperparameters:
 * First, I find default hyperparameters from other implements and Atari hyperparameters like: learning rate is 1e-4, gamma is 0.9, learn_step is 20 and num_envs is 16 (for stages 7-1, 7-2, 7-3, I just use num_envs is 8 because I don't have enought resource, set num_envs to 16 still better for this stages).
@@ -127,9 +141,10 @@ You can separate the test agent part into a separate thread or process. I'm not 
 * **numpy**
 
 ## Acknowledgements
-With my code, I can completed 26/32 stages of Super Mario Bros. With harder stages like 1-3, 5-3, ... A2C can not completed this stages.
+With my A2C code, I can completed 26/32 stages of Super Mario Bros. With harder stages like 1-3, 5-3, ... A2C can not completed this stages.
 
 ## Reference
 * [uvipen A3C](https://github.com/uvipen/Super-mario-bros-A3C-pytorch)
 * [uvipen PPO](https://github.com/uvipen/Super-mario-bros-PPO-pytorch)
 * [lazyprogrammer A2C](https://github.com/lazyprogrammer/machine_learning_examples/tree/master/rl3/a2c)
+* [gianluca-maselli A3C](https://github.com/gianluca-maselli/A3C)
