@@ -20,7 +20,7 @@ def get_args():
 
     parser.add_argument('--learning_rate', type=float, default=7e-5)
     parser.add_argument('--weight_decay', type=float, default = 0)
-    parser.add_argument('--gamma', type=float, default=0.9, help='Discount factor for rewards')
+    parser.add_argument('--gamma', type=float, default=0.99, help='Discount factor for rewards')
     parser.add_argument('--V_coef', type=float, default=0.5, help='Value loss coefficient')
     parser.add_argument('--entropy_coef', type=float, default=0.01, help='Entropy loss coefficient')
     parser.add_argument('--max_grad_norm', type=float, default=40, help='Max gradient norm')

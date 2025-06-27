@@ -33,9 +33,9 @@ from src.model import *
 
 def sample_action(model, states, h, c, device):
     states = torch.tensor(np.array(states), device = device).unsqueeze(0)
+    logits, V, h, c = model(states, h, c)
 
     with torch.no_grad():
-        logits, V, h, c = model(states, h, c)
         policy = F.softmax(logits, dim=1)
         distribution = torch.distributions.Categorical(policy)
         action = distribution.sample().cpu().numpy()[0]
@@ -58,7 +58,7 @@ def ensure_shared_grads(model, shared_model):
         else:
             shared_param._grad = param.grad.cpu()
 
-def train(model, shared_model, memory, optimizer, init_h, init_c, h, c, gamma, entropy_coef, V_coef, max_grad_norm, device,
+def train(model, shared_model, memory, optimizer, h, c, gamma, entropy_coef, V_coef, max_grad_norm, device,
           V_loss, P_loss, E_loss, total_loss, loss_index, len_loss):
 
     # get all data
@@ -86,20 +86,8 @@ def train(model, shared_model, memory, optimizer, init_h, init_c, h, c, gamma, e
     values = torch.cat(values, 0)
     targets = torch.cat(targets, 0).view(-1, 1)
     advantages = (targets - values).reshape(-1)
-
-    h, c = init_h.clone(), init_c.clone()
-    logits = []
-    values = []
-    for state, done in zip(states, dones):
-        logit, value, h, c = model(torch.tensor(np.array(state), device = device).unsqueeze(0), h, c)
-        if done:
-            h = torch.zeros((1, 512), dtype=torch.float, device = device)
-            c = torch.zeros((1, 512), dtype=torch.float, device = device)
-        logits.append(logit)
-        values.append(value)
     logits = torch.cat(logits, 0)
     probs = torch.softmax(logits, -1)
-    values = torch.cat(values, 0)
 
     # calculate loss
     entropy = (- (probs * (probs + 1e-9).log()).sum(-1)).mean()
@@ -117,9 +105,8 @@ def train(model, shared_model, memory, optimizer, init_h, init_c, h, c, gamma, e
     torch.nn.utils.clip_grad_norm_(shared_model.parameters(), max_grad_norm)
     optimizer.step()
 
-    update_loss_statistic(loss_P, loss_V, entropy, loss,
+    update_loss_statistic(loss_P.item(), loss_V.item(), entropy.item(), loss.item(),
                           V_loss, P_loss, E_loss, total_loss, loss_index, len_loss)
-    return h.detach(), c.detach()
 
 def worker(worker_id, world, stage, action_type, additional_bonus_state_8_4_option,
                  shared_model, optimizer, shared_current_step, max_episode_reward, max_episode_step,
@@ -147,7 +134,7 @@ def worker(worker_id, world, stage, action_type, additional_bonus_state_8_4_opti
         c = torch.zeros((1, 512), dtype=torch.float, device = device)
 
         while shared_current_step.value < total_steps and is_completed.value == False:
-            init_h, init_c = h.clone(), c.clone()
+            h, c = h.detach(), c.detach()
 
             with torch.no_grad():
                 model.load_state_dict(shared_model.state_dict())
@@ -198,6 +185,6 @@ def worker(worker_id, world, stage, action_type, additional_bonus_state_8_4_opti
 
                 state = next_state
 
-            h, c = train(model, shared_model, memory, optimizer, init_h, init_c, h, c, gamma, entropy_coef, V_coef, max_grad_norm, device,
+            train(model, shared_model, memory, optimizer, h, c, gamma, entropy_coef, V_coef, max_grad_norm, device,
                   V_loss, P_loss, E_loss, total_loss, loss_index, len_loss) 
             memory.reset()

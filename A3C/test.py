@@ -20,7 +20,7 @@ def get_args():
 
     parser.add_argument('--learning_rate', type=float, default=7e-5)
     parser.add_argument('--weight_decay', type=float, default = 0)
-    parser.add_argument('--gamma', type=float, default=0.9, help='Discount factor for rewards')
+    parser.add_argument('--gamma', type=float, default=0.99, help='Discount factor for rewards')
     parser.add_argument('--V_coef', type=float, default=0.5, help='Value loss coefficient')
     parser.add_argument('--entropy_coef', type=float, default=0.01, help='Entropy loss coefficient')
     parser.add_argument('--max_grad_norm', type=float, default=40, help='Max gradient norm')
@@ -33,7 +33,7 @@ def get_args():
     parser.add_argument("--state_dim", type=tuple, default=(1, 84, 84))
     parser.add_argument("--additional_bonus_state_8_4_option", type=str, default='no', help='if you want bonus reward for stage 8-4, set it to "right_pipe"')
 
-    parser.add_argument("--pretrained_model", type=str, default="best_model.pth")
+    parser.add_argument("--save_dir", type=str, default="")
     args = parser.parse_args()
     return args
 
@@ -43,7 +43,7 @@ def test(config):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model.to(device)
 
-    model.load_state_dict(torch.load(config.pretrained_model))
+    model.load_state_dict(torch.load(config.save_dir))
     model.eval()
 
     images = []
