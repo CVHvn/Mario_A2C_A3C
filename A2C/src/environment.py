@@ -70,24 +70,32 @@ class NoopResetEnv(gym.Wrapper):
         return obs, reward, done, trunk, info
 
 class CustomRewardAndDoneEnv(gym.Wrapper):
-    def __init__(self, env=None, world=1, stage=1):
+    def __init__(self, env=None, world=1, stage=1, additional_bonus_state_8_4_option = "no"):
         super(CustomRewardAndDoneEnv, self).__init__(env)
         self.current_score = 0
         self.current_x = 0
+        self.old_x = -1
         self.current_x_count = 0
         self.max_x = 0
         self.world = world
         self.stage = stage
+        if self.world == 8 and self.stage == 4:
+            self.sea_map = False
+            self.additional_bonus_state_8_4_option = additional_bonus_state_8_4_option
 
     def reset(self, **kwargs):
         self.current_score = 0
         self.current_x = 0
+        self.old_x = -1
         self.current_x_count = 0
         self.max_x = 0
+        if self.world == 8 and self.stage == 4:
+            self.sea_map = False
         return self.env.reset(**kwargs)
 
     def step(self, action):
         state, reward, done, trunc, info = self.env.step(action)
+
         if (info['x_pos'] - self.current_x) == 0:
             self.current_x_count += 1
         else:
@@ -98,9 +106,7 @@ class CustomRewardAndDoneEnv(gym.Wrapper):
         if done and info["flag_get"] == False and info["time"] != 0:
             reward -= 50
             done = True
-        self.current_score = info["score"]
         self.current_x = info["x_pos"]
-        self.max_x = max(self.max_x, self.current_x)
 
         if self.world == 7 and self.stage == 4:
             if (506 <= info["x_pos"] <= 832 and info["y_pos"] > 127) or (
@@ -125,6 +131,36 @@ class CustomRewardAndDoneEnv(gym.Wrapper):
                 reward -= 0.1
         if self.world == 4 and self.stage == 2 and done == False and info['y_pos'] >= 255:
             reward -= 50
+        if self.world == 8 and self.stage == 4:
+            if info["x_pos"] > 2440 and info["x_pos"] <= 2500:
+                done = True
+                reward -= 100
+            if info["x_pos"] >= 3675 and info["x_pos"] <= 3700:
+                done = True
+                reward -= 50
+
+            if info["x_pos"] < self.max_x - 200:
+                if self.max_x >= 1240 and self.max_x <= 1310: #solved bug because x_pos duplicated
+                    if info["x_pos"] >= 320:
+                        done = True
+                        reward -= 50
+
+            if info["x_pos"] < self.old_x - 200:
+                if info["x_pos"] >= 312-5 and info["x_pos"] <= 312+5:
+                    done = True
+                    reward -= 50
+                elif info["x_pos"] >= 56-5 and info["x_pos"] <= 56+5 and self.max_x > 3645 and self.sea_map == False:
+                    if self.additional_bonus_state_8_4_option == 'right_pipe':
+                        reward += 50
+                    self.sea_map = True
+            if self.additional_bonus_state_8_4_option == 'right_pipe':
+                if info["x_pos"] > self.max_x + 100:
+                    reward += 50
+            if done == False:
+                reward -= 0.1
+        self.max_x = max(self.max_x, self.current_x)
+        self.current_score = info["score"]
+        self.old_x = self.current_x
 
         return state, reward / 10., done, trunc, info
     

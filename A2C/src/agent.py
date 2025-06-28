@@ -33,7 +33,7 @@ from src.model import *
 class Agent():
     def __init__(self, world, stage, action_type, envs, num_envs, state_dim, action_dim, save_dir, save_model_step,
                  save_figure_step, learn_step, total_step_or_episode, total_step, total_episode, model,
-                 gamma, learning_rate, entropy_coef, V_coef, max_grad_norm, device):
+                 gamma, learning_rate, entropy_coef, V_coef, max_grad_norm, adam_eps, device):
         self.world = world
         self.stage = stage
         self.action_type = action_type
@@ -63,7 +63,7 @@ class Agent():
         self.gamma = gamma
         self.entropy_coef = entropy_coef
         self.V_coef = V_coef
-        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate, eps = adam_eps)
 
         self.max_grad_norm = max_grad_norm
 
@@ -276,6 +276,8 @@ class Agent():
             if self.current_step % self.learn_step == 0:
                 self.learn(h, c)
                 self.memory.reset()
+                h = h.detach()
+                c = c.detach()
 
             if self.current_step % self.save_model_step == 0:
                 self.save_model()

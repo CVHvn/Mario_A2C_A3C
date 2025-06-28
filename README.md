@@ -86,34 +86,43 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
 * For some stages that require a long sequence of actions (like jumping over a deep hole), setting a gamma of 0.99 helps the model complete the stage while 0.9 cannot.
 * Setting learn_step to 5 usually helps the model learn better (especially helps complete stage 8-1) but training time and stability will decrease compared to learn_step of 20.
 
-| World | Stage | num_envs | learn_step | gamma | learning_rate | training_step | training_time   |
+**Update**: 
+- LSTM backpropagation through time: I find that my code have mistake (I detach lstm hidden state in model.predict() than my model just use h, c as inputs). To take advantage of lstm's backpropagation through time, I fix model by not detach h, c.
+  - Because after backward, we need release gradient in h, c (or bug), I need detach h, c after each training step.
+  - Because my old config (detach_lstm_state = True, don't backpropagation through time) still work (complete 26/32 stages). I add hyperparameter detach_lstm_state to setup whether to use backpropagation through time or not .
+- init_weights: in my PPO project (I done it later). I find that we don't need init weight with A2C/PPO model. Than I add hyperparameter init_weights.
+- adam_eps: I complete 26/32 stages with default PyTorch eps (1e-8). But I find that many projects and papers recomment use 1e-5 or larger eps. Than I add hyperparameter adam_eps.
+  - I find that 1e-8 make learning faster. But don't sure it better for long training. 
+  - Some people recomment RMSprop work better (especially tf version, torch and tf implement RMSprop with some small differents). You can see more at [A2C SB3](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html). This is their [tf like RMSprop implement](https://github.com/DLR-RM/stable-baselines3/blob/master/stable_baselines3/common/sb2_compat/rmsprop_tf_like.py)
+
+| World | Stage | num_envs | learn_step | gamma | learning_rate | adam_eps | detach_lstm_state | init_weights | training_step | training_time   |
 |-------|-------|----------|------------|-------|---------------|---------------|-----------------| 
-| 1     | 1     | 16       | 20         | 0.9   | 1e-4          | 374000        | 5:34:38         |
-| 1     | 2     | 16       | 20         | 0.9   | 1e-4          | 1388000       | 18:44:51        |
-| 1     | 4     | 16       | 20         | 0.9   | 1e-4          | 56000         | 0:51:34         |
-| 2     | 1     | 16       | 20         | 0.99  | 1e-4          | 2520000       | 15:11:00        |
-| 2     | 2     | 16       | 20         | 0.9   | 1e-4          | 2582000       | 1 day, 14:54:56 | 
-| 2     | 3     | 16       | 20         | 0.9   | 1e-4          | 401000        | 5:28:46         |
-| 2     | 4     | 16       | 20         | 0.9   | 1e-4          | 247000        | 3:40:49         |
-| 3     | 1     | 16       | 20         | 0.9   | 1e-4          | 308000        | 4:43:37         |
-| 3     | 2     | 16       | 20         | 0.9   | 1e-4          | 156000        | 2:29:00         |
-| 3     | 3     | 16       | 20         | 0.99  | 1e-4          | 1311000       | 15:16:28        |
-| 3     | 4     | 16       | 20         | 0.99  | 1e-4          | 443000        | 6:46:07         |
-| 4     | 1     | 16       | 20         | 0.9   | 1e-4          | 295000        | 4:08:22         |
-| 4     | 2     | 16       | 20         | 0.99  | 1e-4          | 1120000       | 11:35:43        |
-| 5     | 1     | 16       | 20         | 0.9   | 1e-4          | 486000        | 7:10:43         |
-| 5     | 2     | 16       | 20         | 0.9   | 1e-4          | 1089000       | 11:50:50        |
-| 5     | 4     | 16       | 20         | 0.99  | 1e-4          | 1636000       | 22:02:11        |
-| 6     | 1     | 16       | 20         | 0.9   | 1e-4          | 88000         | 1:01:50         |
-| 6     | 2     | 16       | 20         | 0.99  | 1e-4          | 1215000       | 16:41:19        |
-| 6     | 4     | 16       | 20         | 0.99  | 1e-4          | 940000        | 7:57:47         |
-| 7     | 1     | 8        | 20         | 0.9   | 1e-4          | 528000        | 4:06:45         |
-| 7     | 2     | 8        | 20         | 0.9   | 1e-4          | 3427000       | 1 day, 5:22:18  |
-| 7     | 3     | 8        | 20         | 0.9   | 1e-4          | 1545000       | 12:17:16        |
-| 7     | 4     | 16       | 20         | 0.99  | 1e-4          | 1462000       | 15:27:19        |
-| 8     | 1     | 16       | 5          | 0.9   | 1e-4          | 2158000       | 1 day, 2:35:41  |
-| 8     | 2     | 16       | 20         | 0.9   | 1e-4          | 1107000       | 16:24:30        |
-| 8     | 3     | 16       | 20         | 0.9   | 1e-4          | 521000        | 8:12:27         |
+| 1     | 1     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True | 374000        | 5:34:38         |
+| 1     | 2     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |1388000       | 18:44:51        |
+| 1     | 4     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |56000         | 0:51:34         |
+| 2     | 1     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |2520000       | 15:11:00        |
+| 2     | 2     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |2582000       | 1 day, 14:54:56 | 
+| 2     | 3     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |401000        | 5:28:46         |
+| 2     | 4     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |247000        | 3:40:49         |
+| 3     | 1     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |308000        | 4:43:37         |
+| 3     | 2     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |156000        | 2:29:00         |
+| 3     | 3     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |1311000       | 15:16:28        |
+| 3     | 4     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |443000        | 6:46:07         |
+| 4     | 1     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |295000        | 4:08:22         |
+| 4     | 2     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |1120000       | 11:35:43        |
+| 5     | 1     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |486000        | 7:10:43         |
+| 5     | 2     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |1089000       | 11:50:50        |
+| 5     | 4     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |1636000       | 22:02:11        |
+| 6     | 1     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |88000         | 1:01:50         |
+| 6     | 2     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |1215000       | 16:41:19        |
+| 6     | 4     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |940000        | 7:57:47         |
+| 7     | 1     | 8        | 20         | 0.9   | 1e-4          | 1e-8 | True | True |528000        | 4:06:45         |
+| 7     | 2     | 8        | 20         | 0.9   | 1e-4          | 1e-8 | True | True |3427000       | 1 day, 5:22:18  |
+| 7     | 3     | 8        | 20         | 0.9   | 1e-4          | 1e-8 | True | True |1545000       | 12:17:16        |
+| 7     | 4     | 16       | 20         | 0.99  | 1e-4          | 1e-8 | True | True |1462000       | 15:27:19        |
+| 8     | 1     | 16       | 5          | 0.9   | 1e-4          | 1e-8 | True | True |2158000       | 1 day, 2:35:41  |
+| 8     | 2     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |1107000       | 16:24:30        |
+| 8     | 3     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True |521000        | 8:12:27         |
 
 ## Questions
 
@@ -138,7 +147,9 @@ You can separate the test agent part into a separate thread or process. I'm not 
 * **imageio-ffmpeg**
 * **cv2**
 * **pytorch** 
-* **numpy**
+* **numpy==1.26.4**
+
+Note: newer version of numpy yield bug with Mario environment!
 
 ## Acknowledgements
 With my A2C code, I can completed 26/32 stages of Super Mario Bros. With harder stages like 1-3, 5-3, ... A2C can not completed this stages.
@@ -148,3 +159,4 @@ With my A2C code, I can completed 26/32 stages of Super Mario Bros. With harder 
 * [uvipen PPO](https://github.com/uvipen/Super-mario-bros-PPO-pytorch)
 * [lazyprogrammer A2C](https://github.com/lazyprogrammer/machine_learning_examples/tree/master/rl3/a2c)
 * [gianluca-maselli A3C](https://github.com/gianluca-maselli/A3C)
+* [A2C SB3](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html)

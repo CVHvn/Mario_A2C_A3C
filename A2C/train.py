@@ -13,9 +13,16 @@ def get_args():
     parser.add_argument("--stage", type=int, default=1)
     parser.add_argument('--num_envs', type=int, default=16, help='Number of environment')
     parser.add_argument('--learn_step', type=int, default=20, help='Number of steps between training model')
+    parser.add_argument('--adam_eps', type=float, default=1e-8, help=(
+                                                    "epsilon in Adam, I can complete almost stages with 1e-8 as PyTorch default eps. \n"\
+                                                    "But in most RL papers, they recomment use 1e-5 or even larger.\n"\
+                                                    "I find that 1e-8 make learn faster but don't sure it better for long training"
+                                                    ))
+    parser.add_argument('--detach_lstm_state', type=bool, default=True, help="If False, Model just use h, c as inputs. If True, LSTM will backpropagation through time.")
+    parser.add_argument('--init_weights', type=bool, default=True, help = 'use _initialize_weights function or not')
 
     parser.add_argument('--learning_rate', type=float, default=1e-4)
-    parser.add_argument('--gamma', type=float, default=0.9, help='Discount factor for rewards')
+    parser.add_argument('--gamma', type=float, default=0.99, help='Discount factor for rewards')
     parser.add_argument('--V_coef', type=float, default=0.5, help='Value loss coefficient')
     parser.add_argument('--entropy_coef', type=float, default=0.01, help='Entropy loss coefficient')
     parser.add_argument('--max_grad_norm', type=float, default=0.5, help='Max gradient norm')
@@ -38,13 +45,13 @@ def get_args():
 
 def train(config):
     envs = MultipleEnvironments(config.world, config.stage, config.action_type, config.num_envs)
-    model = Model(config.state_dim, config.action_dim)
+    model = Model(config.state_dim, config.action_dim, config.detach_lstm_state, config.init_weights)
     agent = Agent(world = config.world, stage = config.stage, action_type = config.action_type, envs = envs, num_envs = config.num_envs, 
               state_dim = config.state_dim, action_dim = config.action_dim, save_dir = config.save_dir,
               save_model_step = config.save_model_step, save_figure_step = config.save_figure_step, learn_step = config.learn_step,
               total_step_or_episode = config.total_step_or_episode, total_step = config.total_step, total_episode = config.total_episode,
               model = model, gamma = config.gamma, learning_rate = config.learning_rate, entropy_coef = config.entropy_coef, V_coef = config.V_coef,
-              max_grad_norm = config.max_grad_norm,
+              max_grad_norm = config.max_grad_norm, adam_eps = config.adam_eps,
               device = "cuda" if torch.cuda.is_available() else "cpu")
     agent.train()
 
