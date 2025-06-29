@@ -89,11 +89,12 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
 **Update**: 
 - LSTM backpropagation through time: I find that my code have mistake (I detach lstm hidden state in model.predict() than my model just use h, c as inputs). To take advantage of lstm's backpropagation through time, I fix model by not detach h, c.
   - Because after backward, we need release gradient in h, c (or bug), I need detach h, c after each training step.
-  - Because my old config (detach_lstm_state = True, don't backpropagation through time) still work (complete 26/32 stages). I add hyperparameter detach_lstm_state to setup whether to use backpropagation through time or not .
+  - Because my old config (detach_lstm_state = True, don't backpropagation through time) still work (complete 26/32 stages). I add hyperparameter detach_lstm_state to setup whether to use backpropagation through time or not.
+  - Backpropagation through time help me complete state 6-3 (my old version can't complete this stages). Note: You will complete this stage with init_weights = True.
 - init_weights: in my PPO project (I done it later). I find that we don't need init weight with A2C/PPO model. Than I add hyperparameter init_weights.
 - adam_eps: I complete 26/32 stages with default PyTorch eps (1e-8). But I find that many projects and papers recomment use 1e-5 or larger eps. Than I add hyperparameter adam_eps.
-  - I find that 1e-8 make learning faster. But don't sure it better for long training. 
-  - Some people recomment RMSprop work better (especially tf version, torch and tf implement RMSprop with some small differents). You can see more at [A2C SB3](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html). This is their [tf like RMSprop implement](https://github.com/DLR-RM/stable-baselines3/blob/master/stable_baselines3/common/sb2_compat/rmsprop_tf_like.py)
+  - With my knowledge, if you want increase eps (1e-5 or even 0.1), you need increase learning rate. 
+  - Some people recomment RMSprop work better (especially tf version, torch and tf implement RMSprop have some small differents). You can see more at [A2C SB3](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html). This is their [tf like RMSprop implement](https://github.com/DLR-RM/stable-baselines3/blob/master/stable_baselines3/common/sb2_compat/rmsprop_tf_like.py)
 
 | World | Stage | num_envs | learn_step | gamma | learning_rate | adam_eps | detach_lstm_state | init_weights | training_step | training_time   |
 |-------|-------|----------|------------|-------|---------------|---------------|-----------------|---|---|---| 
@@ -138,6 +139,19 @@ Within a few hours to more than 1 day. Time depends on hardware, I use many diff
 * How can you improve this code?
   
 You can separate the test agent part into a separate thread or process. I'm not good at multi-threaded programming so I don't do this.
+
+* A3C leak memory?
+
+  - Sometime, your machine will leak memory when run A3C (my code or other A3C codes), their are some reasons:
+    - PyTorch or even Numpy version: try other Torch or Numpy versions.
+    - Limit unnecessary variable creation and passing: maybe python can't clear memory efficiently than if we create or pass a lot of unnecessary variables, python can't clear it and yield leak memory.
+    - Reuse logits and values when sample actions:
+      - Because we only need train 1 time with each state. We can reuse logits and values when sample actions to backward.
+      - I met leak memory problem when detach gradient in sample actions and forward states again in train function.
+    
+  - Adam take less memory than RMSprop. Than use Adam if you don't have enough memory for RMSprop.
+
+  - Remember to observe the memory immediately when running A3C. If there is no memory leak, the memory will be occupied quickly and will not increase over time. If you see a slow increase, you have a memory leak (although memory leaks in A3C usually lead to memory overflow and are easy to detect)
 
 ## Requirements
 

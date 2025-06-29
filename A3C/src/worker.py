@@ -62,7 +62,7 @@ def train(model, shared_model, memory, optimizer, h, c, gamma, entropy_coef, V_c
           V_loss, P_loss, E_loss, total_loss, loss_index, len_loss):
 
     # get all data
-    states, actions, next_states, rewards, dones, logits, values = memory.get_data()
+    actions, next_states, rewards, dones, logits, values = memory.get_data()
 
     # calculate target (td lambda target) and gae advantages
     targets = []
@@ -151,7 +151,7 @@ def worker(worker_id, world, stage, action_type, additional_bonus_state_8_4_opti
                 episode_reward += reward
                 episode_step += 1
 
-                memory.save(state, action, reward, next_state, done, logit, V)
+                memory.save(action, reward, next_state, done, logit, V)
 
                 if done:
                     next_state = env.reset()

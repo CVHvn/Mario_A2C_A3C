@@ -18,7 +18,7 @@ def get_args():
                                                     "But in most RL papers, they recomment use 1e-5 or even larger.\n"\
                                                     "I find that 1e-8 make learn faster but don't sure it better for long training"
                                                     ))
-    parser.add_argument('--detach_lstm_state', type=bool, default=True, help="If False, Model just use h, c as inputs. If True, LSTM will backpropagation through time.")
+    parser.add_argument('--detach_lstm_state', type=bool, default=True, help="If True, Model just use h, c as inputs. If False, LSTM will backpropagation through time.")
     parser.add_argument('--init_weights', type=bool, default=True, help = 'use _initialize_weights function or not')
 
     parser.add_argument('--learning_rate', type=float, default=1e-4)
