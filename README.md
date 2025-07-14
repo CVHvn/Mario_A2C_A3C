@@ -42,6 +42,16 @@ This is A2C result:
   <i>A2C Results</i>
 </p>
 
+This is A3C result (can't complete 1-3, 4-3, 4-4, 5-3, 8-4. Other stages I don't have resources to try):
+
+<p align="center">
+  <img src="A3C/demo/gif/1-1.gif" width="200">
+  <img src="A3C/demo/gif/1-2.gif" width="200">
+  <img src="A3C/demo/gif/1-4.gif" width="200">
+  <img src="A3C/demo/gif/2-2.gif" width="200"><br/>
+  <i>A3C Results</i>
+</p>
+
 ## Motivation
 
 I've been interested in Reinforcement Learning since I was in university, but I only tested Atari games with the recommended hyperparameters. If you've ever studied RL, you'll realize that finding the right hyperparameters is extremely important for most RL algorithms (because RL is often very sensitive to hyperparameters). Now I want to try using RL to train the agent to play another game instead of Atari like in the papers.
@@ -74,7 +84,9 @@ A3C use multi process make it hard to work with notebook --> I don't use noteboo
 
 ## Trained models
 
-You can find A2C trained model in folder [trained_model](A2C/trained_model)
+You can find A2C trained model in folder [trained_model](A2C/trained_model).
+
+You can find A3C trained model in folder [trained_model](A3C/trained_model).
 
 ## Hyperparameters
 
@@ -102,7 +114,7 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
   - If you want to improve, spend time on better algorithms instead of wasting resources on hyperparameter search
   - Some people recomment RMSprop work better (especially tf version, torch and tf implement RMSprop have some small differents). You can see more at [A2C SB3](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html). This is their [tf like RMSprop implement](https://github.com/DLR-RM/stable-baselines3/blob/master/stable_baselines3/common/sb2_compat/rmsprop_tf_like.py)
 
-| World | Stage | num_envs | learn_step | gamma | learning_rate | adam_eps | detach_lstm_state | init_weights | training_step | training_time   |
+| World | Stage | num_envs | learn_step | gamma | learning_rate | optimizer_eps | detach_lstm_state | init_weights | training_step | training_time   |
 |-------|-------|----------|------------|-------|---------------|---------------|-----------------|---|---|---| 
 | 1     | 1     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True | 374000        | 5:34:38         |
 | 1     | 2     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True | 1388000       | 18:44:51        |
@@ -131,6 +143,30 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
 | 8     | 1     | 16       | 5          | 0.9   | 1e-4          | 1e-8 | True | True | 2158000       | 1 day, 2:35:41  |
 | 8     | 2     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True | 1107000       | 16:24:30        |
 | 8     | 3     | 16       | 20         | 0.9   | 1e-4          | 1e-8 | True | True | 521000        | 8:12:27         |
+
+### A3C
+
+I don't have enough resources to run A3C (I also don't find A3C much better or worse than A2C). 
+
+Here is the hyperparameter set I used to test the 4 states:
+- optimizer: RMSprop (as paper)
+- optimizer_eps: 0.1
+- gamma: 0.99
+- num_envs: 16
+- learn_step: 20
+- learning_rate: 1e-4
+- V_coef: 0.5
+- entropy_coef: 0.01
+- max_grad_norm: 40
+
+| World | Stage | num_envs | optimizer | optimizer_eps | gamma | learn_step | learning_rate | V_coef | entropy_coef | max_grad_norm | training_step | training_time   |
+|-------|-------|----------|-----------|---------------|-------|------------|---------------|--------|--------------|--------------|---------------|-----------------|
+| 1     | 1     | 16       | RMSprop   | 0.1           | 0.99  | 20         | 1e-4          | 0.5    | 0.01         | 40 | 119860        | 1:54:59         |
+| 1     | 2     | 16       | RMSprop   | 0.1           | 0.99  | 20         | 1e-4          | 0.5    | 0.01         | 40 | 1492280       | 1 day, 17:24:07 |
+| 1     | 4     | 16       | RMSprop   | 0.1           | 0.99  | 20         | 1e-4          | 0.5    | 0.01         | 40 | 32800         | 0:31:14         |
+| 2     | 2     | 16       | RMSprop   | 0.1           | 0.99  | 20         | 1e-4          | 0.5    | 0.01         | 40 | 4611620       | 4 days, 3:11:24 |
+
+I cannot complete the stages that A2C does not complete with this hyperparameter set. 
 
 ## Questions
 
