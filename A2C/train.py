@@ -13,8 +13,8 @@ def get_args():
     parser.add_argument("--stage", type=int, default=1)
     parser.add_argument('--num_envs', type=int, default=16, help='Number of environment')
     parser.add_argument('--learn_step', type=int, default=20, help='Number of steps between training model')
-    parser.add_argument('--adam_eps', type=float, default=1e-8, help=(
-                                                    "epsilon in Adam, I can complete almost stages with 1e-8 as PyTorch default eps. \n"\
+    parser.add_argument('--optimizer_eps', type=float, default=1e-8, help=(
+                                                    "epsilon in optimizer, I can complete almost stages with 1e-8 as PyTorch default eps. \n"\
                                                     "But in most RL papers, they recomment use 1e-5 or even larger.\n"\
                                                     "I find that 1e-8 make learn faster but don't sure it better for long training"
                                                     ))
@@ -51,7 +51,7 @@ def train(config):
               save_model_step = config.save_model_step, save_figure_step = config.save_figure_step, learn_step = config.learn_step,
               total_step_or_episode = config.total_step_or_episode, total_step = config.total_step, total_episode = config.total_episode,
               model = model, gamma = config.gamma, learning_rate = config.learning_rate, entropy_coef = config.entropy_coef, V_coef = config.V_coef,
-              max_grad_norm = config.max_grad_norm, adam_eps = config.adam_eps,
+              max_grad_norm = config.max_grad_norm, optimizer_eps = config.optimizer_eps,
               device = "cuda" if torch.cuda.is_available() else "cpu")
     agent.train()
 

@@ -50,6 +50,8 @@ Initially, I only intended to use the stable baseline to train the agent with so
 
 I have reviewed many other source codes to train agents to play Mario, but most of them only code demos and complete a few very easy states like 1-1, 1-4 and sometimes have some bugs in the code. They also often use simple or right only action_space to make the agent learning easier. So I decided to implement A2C so I can easily adjust the code and understand the algorithm more deeply. I tried tuning the hyperparameters to solve as many stages as possible with this source code.
 
+After completed A2C, I want to try stronger algorithm like PPO, A3C, ACKTR. Because A3C, ACKTR have many similarities with A2C and I don't want create many repos with same content (play mario with weak algorithms), I don't seperate A3C and ACKTR to new repos. 
+
 ## How to use it
 
 ### A2C
@@ -91,9 +93,13 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
   - Because after backward, we need release gradient in h, c (or bug), I need detach h, c after each training step.
   - Because my old config (detach_lstm_state = True, don't backpropagation through time) still work (complete 26/32 stages). I add hyperparameter detach_lstm_state to setup whether to use backpropagation through time or not.
   - Backpropagation through time help me complete state 6-3 (my old version can't complete this stages). Note: You will complete this stage with init_weights = True.
-- init_weights: in my PPO project (I done it later). I find that we don't need init weight with A2C/PPO model. Than I add hyperparameter init_weights.
+- init_weights: in my PPO project (I done it later). I find that we don't need init weight with A2C/A3C/PPO model. Than I add hyperparameter init_weights.
 - adam_eps: I complete 26/32 stages with default PyTorch eps (1e-8). But I find that many projects and papers recomment use 1e-5 or larger eps. Than I add hyperparameter adam_eps.
-  - With my knowledge, if you want increase eps (1e-5 or even 0.1), you need increase learning rate. 
+  - With my knowledge, if you want increase eps (1e-5 or even 0.1), you need increase learning rate.
+  - I found increasing eps did not help the algorithm better with my tests. If you want to improve, spend time on better algorithms instead of wasting resources on hyperparameter search
+- Optimizer: 
+  - Adam vs RMSprop: I see people often use RMSprop as A3C paper for A2C/A3C. Some people say RMSprop helps agents learn better but takes longer than Adam. Some people say Adam is definitely better. I tried it and found Adam is better for this project with my tests!
+  - If you want to improve, spend time on better algorithms instead of wasting resources on hyperparameter search
   - Some people recomment RMSprop work better (especially tf version, torch and tf implement RMSprop have some small differents). You can see more at [A2C SB3](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html). This is their [tf like RMSprop implement](https://github.com/DLR-RM/stable-baselines3/blob/master/stable_baselines3/common/sb2_compat/rmsprop_tf_like.py)
 
 | World | Stage | num_envs | learn_step | gamma | learning_rate | adam_eps | detach_lstm_state | init_weights | training_step | training_time   |
@@ -152,6 +158,10 @@ You can separate the test agent part into a separate thread or process. I'm not 
   - Adam take less memory than RMSprop. Than use Adam if you don't have enough memory for RMSprop.
 
   - Remember to observe the memory immediately when running A3C. If there is no memory leak, the memory will be occupied quickly and will not increase over time. If you see a slow increase, you have a memory leak (although memory leaks in A3C usually lead to memory overflow and are easy to detect)
+
+* Compare A2C and A3C:
+  - A3C is very difficult to implement and runs very slow compared to A2C. I also don't notice much difference between the two.
+  - A3C uses a lot of memory. So i don't have enough resources to test enough for A3C.
 
 ## Requirements
 

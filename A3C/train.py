@@ -17,9 +17,10 @@ def get_args():
     parser.add_argument("--stage", type=int, default=4)
     parser.add_argument('--num_envs', type=int, default=16, help='Number of environment')
     parser.add_argument('--learn_step', type=int, default=20, help='Number of steps between training model')
-    parser.add_argument('--adam_eps', type=float, default=1e-8, help="epsilon in Adam")
+    parser.add_argument('--optimizer_eps', type=float, default=1e-8, help="epsilon in optimizer")
+    parser.add_argument('--optimizer', type=str, default='Adam', help='Adam or RMSprop')
 
-    parser.add_argument('--learning_rate', type=float, default=7e-5)
+    parser.add_argument('--learning_rate', type=float, default=1e-4)
     parser.add_argument('--weight_decay', type=float, default = 0)
     parser.add_argument('--gamma', type=float, default=0.99, help='Discount factor for rewards')
     parser.add_argument('--V_coef', type=float, default=0.5, help='Value loss coefficient')
@@ -43,7 +44,12 @@ def learn(config):
     shared_model = Model(config.state_dim, config.action_dim)
     shared_model.train()
     shared_model.share_memory()
-    optimizer = SharedRMSprop(shared_model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay, eps=config.adam_eps)
+    if config.optimizer == 'Adam':
+        optimizer = SharedAdam(shared_model.parameters(), lr=config.learning_rate, 
+                            weight_decay=config.weight_decay, eps=config.optimizer_eps)
+    else:
+        optimizer = SharedRMSprop(shared_model.parameters(), lr=config.learning_rate, 
+                            weight_decay=config.weight_decay, eps=config.optimizer_eps)
     optimizer.share_memory()
 
     is_completed = mp.Value("b", False)

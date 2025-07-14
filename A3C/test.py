@@ -17,7 +17,8 @@ def get_args():
     parser.add_argument("--stage", type=int, default=4)
     parser.add_argument('--num_envs', type=int, default=16, help='Number of environment')
     parser.add_argument('--learn_step', type=int, default=20, help='Number of steps between training model')
-    parser.add_argument('--adam_eps', type=float, default=1e-8, help="epsilon in Adam")
+    parser.add_argument('--optimizer_eps', type=float, default=1e-8, help="epsilon in optimizer")
+    parser.add_argument('--optimizer', type=str, default='Adam', help='Adam or RMSprop')
 
     parser.add_argument('--learning_rate', type=float, default=7e-5)
     parser.add_argument('--weight_decay', type=float, default = 0)
