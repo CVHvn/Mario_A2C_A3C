@@ -1,9 +1,9 @@
-# Mario_A2C_A3C
-Playing Super Mario Bros with Advantage Actor Critic (A2C) and Asynchronous Advantage Actor Critic (A3C)
+# Mario_A2C_A3C_ACKTR
+Playing Super Mario Bros with Advantage Actor Critic (A2C), Asynchronous Advantage Actor Critic (A3C) and Actor Critic using Kronecker-Factored Trust Region (ACKTR)
 
 ## Introduction
 
-My PyTorch Advantage Actor Critic (A2C) and Asynchronous Advantage Actor Critic (A3C) implement to playing Super Mario Bros.
+My PyTorch [Advantage Actor Critic (A2C) is the synchronous version of the A3C](https://arxiv.org/pdf/1602.01783), [Asynchronous Advantage Actor Critic (A3C)](https://arxiv.org/pdf/1602.01783) and [Actor Critic using Kronecker-Factored Trust Region (ACKTR)](https://arxiv.org/pdf/1708.05144) implement to playing Super Mario Bros.
 
 This is A2C result:
 <p align="center">
@@ -52,6 +52,43 @@ This is A3C result (can't complete 1-3, 4-3, 4-4, 5-3, 8-4. Other stages I don't
   <i>A3C Results</i>
 </p>
 
+This is ACKTR result:
+<p align="center">
+  <img src="ACKTR/demo/gif/1-1.gif" width="200">
+  <img src="ACKTR/demo/gif/1-2.gif" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200">
+  <img src="ACKTR/demo/gif/1-4.gif" width="200"><br/>
+  <img src="ACKTR/demo/gif/2-1.gif" width="200">
+  <img src="ACKTR/demo/gif/2-2.gif" width="200">
+  <img src="ACKTR/demo/gif/2-3.gif" width="200">
+  <img src="ACKTR/demo/gif/2-4.gif" width="200"><br/>
+  <img src="ACKTR/demo/gif/3-1.gif" width="200">
+  <img src="ACKTR/demo/gif/3-2.gif" width="200">
+  <img src="ACKTR/demo/gif/3-3.gif" width="200">
+  <img src="ACKTR/demo/gif/3-4.gif" width="200"><br/>
+  <img src="ACKTR/demo/gif/4-1.gif" width="200">
+  <img src="ACKTR/demo/gif/4-2.gif" width="200">
+  <img src="ACKTR/demo/gif/4-3.gif" height="187.5" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200"><br/>
+  <img src="ACKTR/demo/gif/5-1.gif" width="200">
+  <img src="ACKTR/demo/gif/5-2.gif" width="200">
+  <img src="ACKTR/demo/gif/5-3.gif" height="187.5" width="200">
+  <img src="ACKTR/demo/gif/5-4.gif" width="200"><br/>
+  <img src="ACKTR/demo/gif/6-1.gif" width="200">
+  <img src="ACKTR/demo/gif/6-2.gif" width="200">
+  <img src="ACKTR/demo/gif/6-3.gif" width="200">
+  <img src="ACKTR/demo/gif/6-4.gif" width="200"><br/>
+  <img src="ACKTR/demo/gif/7-1.gif" width="200">
+  <img src="ACKTR/demo/gif/7-2.gif" width="200">
+  <img src="ACKTR/demo/gif/7-3.gif" width="200">
+  <img src="ACKTR/demo/gif/7-4.gif" width="200"><br/>
+  <img src="ACKTR/demo/gif/8-1.gif" width="200">
+  <img src="ACKTR/demo/gif/8-2.gif" width="200">
+  <img src="ACKTR/demo/gif/8-3.gif" width="200">
+  <img src="A2C/demo/Black_colour.jpg" height="187.5" width="200"><br/>
+  <i>ACKTR Results</i>
+</p>
+
 ## Motivation
 
 I've been interested in Reinforcement Learning since I was in university, but I only tested Atari games with the recommended hyperparameters. If you've ever studied RL, you'll realize that finding the right hyperparameters is extremely important for most RL algorithms (because RL is often very sensitive to hyperparameters). Now I want to try using RL to train the agent to play another game instead of Atari like in the papers.
@@ -78,15 +115,27 @@ Or you can use [**A2C/train.py**](A2C/train.py) and [**A2C/test.py**](A2C/test.p
 
 Use [**A3C/train.py**](A3C/train.py) and [**A3C/test.py**](A3C/test.py):
 * **Train your model** by running **A3C/train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 8
-* **Test your trained model** by running **A3C/test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth  --num_envs 2
+* **Test your trained model** by running **A3C/test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth
 
 A3C use multi process make it hard to work with notebook --> I don't use notebook for A3C version!
+
+### ACKTR
+
+You can use my [ACKTR notebook](acktr_mario.ipynb) for training and testing agent very easy:
+* **Train your model** by running all cell before session test
+* **Test your trained model** by running all cell except agent.train(), just pass your model path to agent.load_model(model_path)
+
+Or you can use [**ACKTR/train.py**](ACKTR/train.py) and [**ACKTR/test.py**](ACKTR/test.py) if you don't want to use notebook:
+* **Train your model** by running **ACKTR/train.py**: For example training for stage 1-4: python train.py --world 1 --stage 4 --num_envs 32
+* **Test your trained model** by running **ACKTR/test.py**: For example testing for stage 1-4: python test.py --world 1 --stage 4 --pretrained_model best_model.pth
 
 ## Trained models
 
 You can find A2C trained model in folder [trained_model](A2C/trained_model).
 
 You can find A3C trained model in folder [trained_model](A3C/trained_model).
+
+You can find ACKTR trained model in folder [trained_model](ACKTR/trained_model).
 
 ## Hyperparameters
 
@@ -149,15 +198,6 @@ I use hyperparameters as this table to train agent. How I find hyperparameters:
 I don't have enough resources to run A3C (I also don't find A3C much better or worse than A2C). 
 
 Here is the hyperparameter set I used to test the 4 states:
-- optimizer: RMSprop (as paper)
-- optimizer_eps: 0.1
-- gamma: 0.99
-- num_envs: 16
-- learn_step: 20
-- learning_rate: 1e-4
-- V_coef: 0.5
-- entropy_coef: 0.01
-- max_grad_norm: 40
 
 | World | Stage | num_envs | optimizer | optimizer_eps | gamma | learn_step | learning_rate | V_coef | entropy_coef | max_grad_norm | training_step | training_time   |
 |-------|-------|----------|-----------|---------------|-------|------------|---------------|--------|--------------|--------------|---------------|-----------------|
@@ -168,11 +208,88 @@ Here is the hyperparameter set I used to test the 4 states:
 
 I cannot complete the stages that A2C does not complete with this hyperparameter set. 
 
+### ACKTR
+
+**KFAC:**
+
+- I tried changing the `learning_rate`, `max_learning_rate`, and `kl_clip` (in KFAC), but there was no significant improvement.
+- I also tried adding `max_gradient_norm` (before `optimizer.step` or `KFAC.step`), but it didn’t work.
+- The `value_fisher_coef` was set to 1 by default (like in Stable Baselines); I tried 0.5 but saw no improvement.
+- `eigen_eps`: 
+  - this parameter helps `torch.linalg.eigh` avoid one of the following three errors:
+    - The algorithm failed to converge because the input matrix is ill-conditioned or has too many repeated eigenvalues
+    - This error may appear if the input matrix contains NaN (i.e., the model contains NaNs)
+    - Training stops without an obvious error (possibly because eigenvalues < 1e-6, leading to no gradient)
+  - Initially, I set it to 1e-3. This value was quite large, and the agent couldn't learn the harder stages.
+  - I reduced this parameter by a factor of 10 if the agent failed to learn. Stages 1-2, 3-3, 4-3, 5-3, 6-3 and 8-1 were completed with smaller `eigen_eps` values.
+  - I also tried `eigen_eps = 1e-4` on some stages (2-1, 5-2, 7-4) and found that 1e-4 helped the agent learn significantly faster than 1e-3.
+
+**ACKTR:**
+
+- `entropy_coef = 0.05` did not help the agent learn better.
+- `value_coef = 0.25` did not help the agent learn better.
+- `gae_lambda = 0.95` performed better than 1.0 in one of my experiments.
+- `gamma = 0.997` did not improve learning in my experiments.
+
+**Hyperparameters:**
+
+This is my ACKTR default hyperparameters:
+
+| num_envs | learn_step | gamma | learning_rate | entropy_coef | V_coef | init_weights       | gae_lambda |
+|----------|------------|-------|----------------|---------------|--------|---------------------|-------------|
+| 32       | 20         | 0.99  | 5e-4           | 0.01          | 0.5    | True (orthogonal)   | 0.95        |
+
+This is my KFAC default hyperparameters:
+
+| momentum | stat_decay | Ts | Tf | kl_clip | damping | fast_cnn | weight_decay | learning_rate |
+|----------|-------------|----|----|----------|----------|-----------|----------------|----------------|
+| 0.9      | 0.99        | 1  | 10 | 0.001    | 1e-2     | False     | 0              | 5e-4           |
+
+Training Results per Stage
+
+| World | Stage | eigen_eps | Training Steps | Training Time       |
+|-------|-------|-----------|----------------|---------------------|
+| 1     | 1     | 1e-3      | 140500         | 1:45:35             |
+| 1     | 2     | **1e-4**     | 223500         | 3:37:23             |
+| 1     | 4     | 1e-3      | 46500          | 0:34:18             |
+| 2     | 1     | 1e-3      | 4809500        | 2 days, 22:58:13    |
+|       |       | 1e-4      | 884000         | 10:07:27            |
+| 2     | 2     | 1e-3      | 704000         | 11:00:18            |
+| 2     | 3     | 1e-3      | 144500         | 2:29:12             |
+| 2     | 4     | 1e-3      | 134000         | 2:20:44             |
+| 3     | 1     | 1e-3      | 125500         | 2:08:23             |
+| 3     | 2     | 1e-3      | 80500          | 1:19:19             |
+| 3     | 3     | **1e-4**      | 89500          | 1:30:21             |
+| 3     | 4     | 1e-3      | 565500         | 9:12:46             |
+| 4     | 1     | 1e-3      | 129500         | 2:16:04             |
+| 4     | 2     | 1e-3      | 297000         | 5:46:47             |
+| 4     | 3     | **1e-5**      | 148000         | 2:14:07             |
+| 5     | 1     | 1e-3      | 120000         | 2:35:07             |
+| 5     | 2     | 1e-3      | 796500         | 10:11:54            |
+|       |       | 1e-4      | 433500         | 5:00:12             |
+| 5     | 3     | **1e-6**      | 2551000        | 1 day, 19:54:33     |
+| 5     | 4     | 1e-3      | 374500         | 7:00:12             |
+| 6     | 1     | 1e-3      | 42500          | 0:51:21             |
+| 6     | 2     | 1e-3      | 351000         | 7:01:03             |
+| 6     | 3     | **1e-4**      | 443500         | 6:45:17             |
+| 6     | 4     | 1e-3      | 64500          | 1:19:09             |
+| 7     | 1     | 1e-3      | 360000         | 7:01:18             |
+| 7     | 2     | 1e-3      | 1153000        | 17:14:12            |
+| 7     | 3     | 1e-3      | 247500         | 4:08:02             |
+| 7     | 4     | 1e-3      | 202000         | 2:38:51             |
+|       |       | 1e-4      | 27000          | 0:16:03             |
+| 8     | 1     | **1e-5**      | 1379500        | 22:58:53            |
+|       |       | **1e-6**      | 428000         | 7:30:04             |
+| 8     | 2     | 1e-3      | 525000         | 8:01:06             |
+| 8     | 3     | 1e-3      | 478000         | 7:52:20             |
+
 ## Questions
 
 * Is this code guaranteed to complete the stages if you try training?
   
-This hyperparameter does not guarantee you will complete the stage, but I tried and most stages will complete on the first train. A few difficult stages will take 2 to 3 times to complete.
+This hyperparameter does not guarantee A2C will complete the stage, but I tried and most stages will complete on the first train. A few difficult stages will take 2 to 3 times to complete.
+
+Stage 5-3 (ACKTR) will be very hard to reproduce (other stages will be guaranteed to reproduce in 1-3 random runs)
 
 * How long do you train agents?
   
@@ -180,7 +297,7 @@ Within a few hours to more than 1 day. Time depends on hardware, I use many diff
 
 * How can you improve this code?
   
-You can separate the test agent part into a separate thread or process. I'm not good at multi-threaded programming so I don't do this.
+You can separate the test agent part into a separate thread or process (for A2C, ACKTR). I'm not good at multi-threaded programming so I don't do this.
 
 * A3C leak memory?
 
@@ -198,6 +315,22 @@ You can separate the test agent part into a separate thread or process. I'm not 
 * Compare A2C and A3C:
   - A3C is very difficult to implement and runs very slow compared to A2C. I also don't notice much difference between the two.
   - A3C uses a lot of memory. So i don't have enough resources to test enough for A3C.
+  - Conclusion: should use A2C to save resources. If you want a better algorithm than A2C, use ACKTR, PPO or newer algorithms (Muzero, R2D2, Agent75, SAC, ...) instead of A3C (only marginally better in some environments and very resource-intensive, difficult to implement)
+
+* Compare ACKTR and A2C:
+  - Advantages:
+    - ACKTR learns much faster than A2C.
+    - ACKTR completes more stages (better than A2C)
+    - ACKTR can use larger num_envs, learn_step (according to ACKTR paper, A2C will drop performance if batch_size=learn_step * num_envs is too large (~640) while ACKTR will be better if batchsize is increased).
+    - Adding KFAC is very easy, just recode (or copy) the KFAC optimizer. Add a few lines of backward fisher matrix code
+
+  - Disadvantages:
+    - ACKTR cannot take advantage of LSTM, if KFAC can still work with LSTM, ACKTR's performance can be significantly better.
+    - ACKTR has bugs if eigen_eps is not added! However, adding eigen_eps will distort the gradient (all torch KFAC implementations that I saw will have bugs so I added eigen_eps)
+    - ACKTR cannot be as good as PPO even though KFAC is much more complex clipping in PPO
+    - If you recode KFAC (instead of copying like me), it will be very difficult to implement because KFAC is complex and difficult to understand.
+  
+  - Conclusion: ACKTR is definitely better than A2C
 
 ## Requirements
 
@@ -215,9 +348,15 @@ Note: newer version of numpy yield bug with Mario environment!
 ## Acknowledgements
 With my A2C code, I can completed 27/32 stages of Super Mario Bros. With harder stages like 1-3, 5-3, ... A2C can not completed this stages.
 
+With my ACKTR code, I can completed 29/32 stages of Super Mario Bros. With harder stages 1-3, 4-4, 8-4, ACKTR can not completed this stages.
+
 ## Reference
+* [ikostrikov ACKTR](https://github.com/ikostrikov/pytorch-a2c-ppo-acktr-gail)
+* [stable_baselines ACKTR](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/acktr/kfac.py)
 * [uvipen A3C](https://github.com/uvipen/Super-mario-bros-A3C-pytorch)
 * [uvipen PPO](https://github.com/uvipen/Super-mario-bros-PPO-pytorch)
 * [lazyprogrammer A2C](https://github.com/lazyprogrammer/machine_learning_examples/tree/master/rl3/a2c)
 * [gianluca-maselli A3C](https://github.com/gianluca-maselli/A3C)
 * [A2C SB3](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html)
+* [A3C paper](https://arxiv.org/pdf/1602.01783)
+* [ACKTR paper](https://arxiv.org/pdf/1708.05144)
